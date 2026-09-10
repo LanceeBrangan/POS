@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import ProductForm from './product-form';
 
 
 interface Props {
@@ -95,6 +96,19 @@ export default function ProductIndex({products, categories}: Props){
                     </table>
                 </div>
             </div>
+            {
+                showForm && (
+                    <ProductForm
+                        categories = {categories}
+                        product = {editing}
+                        onClose = {handleClose}
+                    />
+                )
+            }
         </>
     );
 }
+
+ProductIndex.layout = {
+        breadcrumbs: [{ title: 'Products', href: '/products' }],
+    }

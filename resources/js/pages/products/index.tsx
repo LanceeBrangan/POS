@@ -5,59 +5,55 @@ import { toast } from 'sonner';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import ProductForm from './product-form';
-
+import ProductForm from "./product-form";
 
 interface Props {
     products: Product[];
     categories: Category[];
 }
 
-export default function ProductIndex({products, categories}: Props){
-    const [showForm, setshowForm] = useState(false);
+export default function ProductIndex({ products, categories}: Props){
+    const [ShowForm, setShowForm] = useState(false);
     const [editing, setEditing] = useState<Product | null>(null);
-
 
     function handleEdit(product: Product){
         setEditing(product);
-        setshowForm(true);
-
+        setShowForm(true);
     }
 
     function handleDelete(product: Product){
-        if (!confirm('Delete "${product.name}"?')) return;
-       router.delete('/products/${product.id}', {
+        if (!confirm(`Delete "${product.name}"?`)) return;
+        router.delete(`/products/${product.id}`,{
             onSuccess: () => toast.success('Product deleted.'),
-
         });
     }
 
     function handleClose() {
-        setshowForm(false);
+        setShowForm(false);
         setEditing(null);
     }
 
     return (
         <>
-            <Head title="Products" />
-            <div className="p-6">
-                <div className="mb-4 flex items-center justify-between">
-                    <h1 className="text-2xl font-bold">Products</h1>
-                    <Button onClick ={() => {setEditing(null); setshowForm(true); }}>
-                        <Plus className="mr-2 h-4 w-4" />
+            <Head title='Products' />
+            <div className='p-6'>
+                <div className='mb-4 flex items-center justify-between'>
+                    <h1 className='text-2xl font-bold'>Products</h1>
+                    <Button onClick={() => { setEditing(null); setShowForm(true); }}>
+                        <Plus className='mr-2 h-4 w-4' />
                         Add Product
                     </Button>
                 </div>
-                <div className="rounded-lg border">
-                    <table className="w-full text-sm">
-                        <thead className="border-b bg-muted/30">
+                <div className='rounded-lg border'>
+                    <table className='w-full text-sm'>
+                        <thead className="border-b bg-muted/50">
                             <tr>
-                                <th className="p-3 text-left">Name</th>
-                                <th className="p-3 text-left">Category</th>
-                                <th className="p-3 text-left">Price</th>
-                                <th className="p-3 text-left">Stock</th>
-                                <th className="p-3 text-left">Status</th>
-                                <th className="p-3 text-left">Actions</th>
+                                <th className="px-4 py-3 text-left">Name</th>
+                                <th className="px-4 py-3 text-left">Category</th>
+                                <th className="px-4 py-3 text-right">Price</th>
+                                <th className="px-4 py-3 text-right">Stock</th>
+                                <th className="px-4 py-3 text-center">Status</th>
+                                <th className="px-4 py-3 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,8 +64,8 @@ export default function ProductIndex({products, categories}: Props){
                                     </td>
                                 </tr>
                             )}
-                            {products.map(product => (
-                         <tr key={product.id} className="border-b last:border-0 hover:bg-muted/25">
+                            {products.map((product) => (
+                                <tr key={product.id} className="border-b last:border-0 hover:bg-muted/25">
                                     <td className="px-4 py-3 font-medium">{product.name}</td>
                                     <td className="px-4 py-3 text-muted-foreground">{product.category.name}</td>
                                     <td className="px-4 py-3 text-right">${product.price}</td>
@@ -91,17 +87,17 @@ export default function ProductIndex({products, categories}: Props){
                                         </Button>
                                     </td>
                                 </tr>
-                                   ))}
+                            ))}
                         </tbody>
                     </table>
                 </div>
             </div>
             {
-                showForm && (
+                ShowForm && (
                     <ProductForm
-                        categories = {categories}
-                        product = {editing}
-                        onClose = {handleClose}
+                        categories={categories}
+                        product={editing}
+                        onClose={handleClose}
                     />
                 )
             }
@@ -110,5 +106,5 @@ export default function ProductIndex({products, categories}: Props){
 }
 
 ProductIndex.layout = {
-        breadcrumbs: [{ title: 'Products', href: '/products' }],
-    }
+    breadcrumbs: [{ title: 'Products', href: '/products' }],
+};

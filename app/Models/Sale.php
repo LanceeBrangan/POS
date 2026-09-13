@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Dabase\Eloquent\Attributes\Fillable;
-use Illuminate\Dabase\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable(['user_id', 'total', 'cash_tendered', 'change_amount', 'status', 'notes'])]
 class Sale extends Model
@@ -17,6 +17,6 @@ class Sale extends Model
 
     public function items(): HasMany
     {
-        return $this - hasMany(SaleItem::class);
+        return $this->hasMany(SaleItem::class);
     }
 }

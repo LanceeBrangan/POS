@@ -14,14 +14,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'stock',
     'image',
     'is_active',
-    ])]
+])]
 
 class Product extends Model
 {
     protected function casts(): array
     {
-        return[
-            'price'=> 'decimal:2',
+        return [
+            'price' => 'decimal:2',
             'is_active' => 'boolean',
         ];
     }

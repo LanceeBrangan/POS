@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class CheckoutController extends Controller
 {
@@ -26,7 +27,9 @@ class CheckoutController extends Controller
             $saleItems = [];
 
             foreach ($validated['items'] as $item) {
-                $product = Product::lockForUpdate()->findOrFail($item['product_id']);
+                $product = Product::query()
+                    ->lockForUpdate()
+                    ->findOrFail($item['product_id']);
 
                 if ($product->stock < $item['quantity']) {
                     throw ValidationException::withMessages([
@@ -71,7 +74,7 @@ class CheckoutController extends Controller
         return redirect()->route('receipt', $saleId);
     }
 
-    public function receipt(Sale $sale)
+    public function receipt(Sale $sale): Response
     {
         $sale->load('items');
 

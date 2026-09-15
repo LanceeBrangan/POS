@@ -17,39 +17,61 @@ interface Props {
     onCheckout: () => void;
 }
 
-export default function CartPanel({ items, subtotal, onRemove, onSetQuantity, onClear, onCheckout }: Props) {
+export default function CartPanel({
+    items,
+    subtotal,
+    onRemove,
+    onSetQuantity,
+    onClear,
+    onCheckout,
+}: Props) {
     return (
         <div className="flex w-80 flex-col border-l">
             <div className="flex items-center justify-between border-b px-4 py-3">
                 <h2 className="font-semibold">Cart</h2>
                 {items.length > 0 && (
-                    <button onClick={onClear} className="text-xs text-muted-foreground hover:text-destructive">
+                    <button
+                        onClick={onClear}
+                        className="text-muted-foreground hover:text-destructive text-xs"
+                    >
                         Clear all
                     </button>
                 )}
             </div>
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {items.length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-8">
+            <div className="flex-1 space-y-3 overflow-y-auto p-4">
+                {items.length === 0 ? (
+                    <p className="text-muted-foreground py-8 text-center text-sm">
                         No items yet.
                     </p>
                 ) : (
-                    items.map(item => (
-                        <div key={item.product.id} className="flex items-center gap-2">
-                            <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium truncate">{item.product.name}</p>
-                                <p className="text-xs text-muted-foreground">${item.product.price} each</p>
+                    items.map((item) => (
+                        <div
+                            key={item.product.id}
+                            className="flex items-center gap-2"
+                        >
+                            <div className="min-w-0 flex-1">
+                                <p className="truncate text-sm font-medium">
+                                    {item.product.name}
+                                </p>
+                                <p className="text-muted-foreground text-xs">
+                                    ${item.product.price} each
+                                </p>
                             </div>
                             <Input
                                 type="number"
                                 min={1}
                                 max={item.product.stock}
                                 value={item.quantity}
-                                onChange={e => onSetQuantity(item.product.id, parseInt(e.target.value) || 0)}
+                                onChange={(e) =>
+                                    onSetQuantity(
+                                        item.product.id,
+                                        parseInt(e.target.value) || 0,
+                                    )
+                                }
                                 className="w-16 text-center"
                             />
                             <button onClick={() => onRemove(item.product.id)}>
-                                <Trash2 className="h-4 w-4 text-destructive" />
+                                <Trash2 className="text-destructive h-4 w-4" />
                             </button>
                         </div>
                     ))

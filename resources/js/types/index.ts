@@ -8,10 +8,10 @@ export interface Category {
     description: string | null;
 }
 
-export interface Product{
+export interface Product {
     id: number;
     category_id: number;
-    name: string
+    name: string;
     description: string | null;
     price: string;
     stock: number;
@@ -20,7 +20,7 @@ export interface Product{
     category: Category;
 }
 
-export interface CartItem{
+export interface CartItem {
     product: Product;
     quantity: number;
 }
@@ -42,5 +42,3 @@ export interface Sale {
     created_at: string;
     items: SaleItem[];
 }
-
-

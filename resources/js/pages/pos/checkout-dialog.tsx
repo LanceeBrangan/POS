@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { router } from '@inertiajs/react';
 import { toast } from 'sonner';
 import type { CartItem } from '@/types';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,7 +20,13 @@ interface Props {
     onClose: () => void;
 }
 
-export default function CheckoutDialog({ open, items, subtotal, onSuccess, onClose }: Props) {
+export default function CheckoutDialog({
+    open,
+    items,
+    subtotal,
+    onSuccess,
+    onClose,
+}: Props) {
     const [cashInput, setCashInput] = useState('');
     const [processing, setProcessing] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -34,7 +45,10 @@ export default function CheckoutDialog({ open, items, subtotal, onSuccess, onClo
         router.post(
             '/checkout',
             {
-                items:         items.map(i => ({ product_id: i.product.id, quantity: i.quantity })),
+                items: items.map((i) => ({
+                    product_id: i.product.id,
+                    quantity: i.quantity,
+                })),
                 cash_tendered: cash,
             },
             {
@@ -52,7 +66,6 @@ export default function CheckoutDialog({ open, items, subtotal, onSuccess, onClo
         );
     }
 
-
     return (
         <Dialog open={open} onOpenChange={onClose}>
             <DialogContent className="max-w-sm">
@@ -60,14 +73,24 @@ export default function CheckoutDialog({ open, items, subtotal, onSuccess, onClo
                     <DialogTitle>Checkout</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4">
-                    <div className="rounded-lg bg-muted p-4 space-y-1">
-                        {items.map(i => (
-                            <div key={i.product.id} className="flex justify-between text-sm">
-                                <span>{i.product.name} × {i.quantity}</span>
-                                <span>${(parseFloat(i.product.price) * i.quantity).toFixed(2)}</span>
+                    <div className="bg-muted space-y-1 rounded-lg p-4">
+                        {items.map((i) => (
+                            <div
+                                key={i.product.id}
+                                className="flex justify-between text-sm"
+                            >
+                                <span>
+                                    {i.product.name} × {i.quantity}
+                                </span>
+                                <span>
+                                    $
+                                    {(
+                                        parseFloat(i.product.price) * i.quantity
+                                    ).toFixed(2)}
+                                </span>
                             </div>
                         ))}
-                        <div className="flex justify-between font-bold pt-2 border-t mt-2">
+                        <div className="mt-2 flex justify-between border-t pt-2 font-bold">
                             <span>Total</span>
                             <span>${subtotal.toFixed(2)}</span>
                         </div>
@@ -82,7 +105,10 @@ export default function CheckoutDialog({ open, items, subtotal, onSuccess, onClo
                             min={subtotal.toFixed(2)}
                             placeholder="0.00"
                             value={cashInput}
-                            onChange={e => { setCashInput(e.target.value); setError(null); }}
+                            onChange={(e) => {
+                                setCashInput(e.target.value);
+                                setError(null);
+                            }}
                             autoFocus
                         />
                     </div>
@@ -90,13 +116,21 @@ export default function CheckoutDialog({ open, items, subtotal, onSuccess, onClo
                     {cashInput && (
                         <div className="flex justify-between text-lg font-bold">
                             <span>Change</span>
-                            <span className={change >= 0 ? 'text-green-600' : 'text-destructive'}>
+                            <span
+                                className={
+                                    change >= 0
+                                        ? 'text-green-600'
+                                        : 'text-destructive'
+                                }
+                            >
                                 ${change.toFixed(2)}
                             </span>
                         </div>
                     )}
 
-                    {error && <p className="text-sm text-destructive">{error}</p>}
+                    {error && (
+                        <p className="text-destructive text-sm">{error}</p>
+                    )}
 
                     <Button
                         className="w-full"

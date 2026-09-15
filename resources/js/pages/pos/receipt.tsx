@@ -30,21 +30,27 @@ export default function Receipt({ sale }: Props) {
             <div className="receipt-paper mx-auto max-w-xs p-6 font-mono text-sm">
                 <div className="mb-4 text-center">
                     <p className="text-xl font-bold">POS TUTORIAL</p>
-                    <p className="text-xs text-muted-foreground">Your local shop</p>
-                    <p className="mt-1 text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
+                        Your local shop
+                    </p>
+                    <p className="text-muted-foreground mt-1 text-xs">
                         {new Date(sale.created_at).toLocaleString()}
                     </p>
-                    <p className="text-xs text-muted-foreground">Receipt #{sale.id}</p>
+                    <p className="text-muted-foreground text-xs">
+                        Receipt #{sale.id}
+                    </p>
                 </div>
 
                 <div className="mb-3 space-y-2 border-t border-dashed pt-3">
-                    {sale.items.map(item => (
+                    {sale.items.map((item) => (
                         <div key={item.id}>
                             <div className="flex justify-between">
-                                <span className="flex-1 truncate">{item.product_name}</span>
+                                <span className="flex-1 truncate">
+                                    {item.product_name}
+                                </span>
                                 <span className="ml-2">${item.subtotal}</span>
                             </div>
-                            <div className="text-xs text-muted-foreground">
+                            <div className="text-muted-foreground text-xs">
                                 {item.quantity} × ${item.unit_price}
                             </div>
                         </div>
@@ -66,7 +72,7 @@ export default function Receipt({ sale }: Props) {
                     </div>
                 </div>
 
-                <div className="mt-6 text-center text-xs text-muted-foreground">
+                <div className="text-muted-foreground mt-6 text-center text-xs">
                     <p>Thank you for your purchase!</p>
                 </div>
             </div>
